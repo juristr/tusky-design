@@ -1,6 +1,7 @@
 # Plan: Setup Nx Release for @juristr/tusky-design
 
 ## Summary
+
 Setup Nx Release to publish `@juristr/tusky-design` to npmjs.org using conventional commits, similar to epicweb-slate-ui.
 
 **Registry:** npmjs.org (public, easy consumer access)
@@ -9,7 +10,9 @@ Setup Nx Release to publish `@juristr/tusky-design` to npmjs.org using conventio
 ## Files to Create/Modify
 
 ### 1. `tools/release.ts` (CREATE)
+
 Custom release script that:
+
 - Copies packages to `build/` directory (excluding node_modules, test files)
 - Calls `releaseVersion()` with conventional commits
 - Calls `releaseChangelog()` for project + workspace changelogs
@@ -17,7 +20,9 @@ Custom release script that:
 - Calls `releasePublish()` to npm with public access
 
 ### 2. `nx.json` (MODIFY)
+
 Add release config + targetDefaults:
+
 ```json
 "targetDefaults": {
   ...existing,
@@ -46,7 +51,9 @@ Add release config + targetDefaults:
 ```
 
 ### 3. `package.json` (MODIFY)
+
 Add release script + deps:
+
 ```json
 "scripts": {
   "release": "pnpm nx run-many --target=build && tsx tools/release.ts"
@@ -60,7 +67,9 @@ Add release script + deps:
 ```
 
 ### 4. `.github/workflows/publish.yml` (CREATE)
+
 Manual trigger workflow:
+
 - Checkout with full history + tags
 - Setup Node + pnpm
 - Install deps
@@ -69,7 +78,9 @@ Manual trigger workflow:
 - Env: `GITHUB_TOKEN`, `NPM_TOKEN`
 
 ### 5. `packages/tusky-design/package.json` (MODIFY)
+
 Add publishConfig:
+
 ```json
 "publishConfig": {
   "access": "public"
@@ -77,6 +88,7 @@ Add publishConfig:
 ```
 
 ## Execution Order
+
 1. Add deps to root package.json (`tsx`, `fs-extra`, `@types/fs-extra`)
 2. Create `tools/release.ts`
 3. Update `nx.json` with release config
@@ -85,4 +97,5 @@ Add publishConfig:
 6. Run `pnpm install`
 
 ## Prerequisites (manual)
+
 - NPM_TOKEN secret in GitHub repo settings (from npmjs.org account)
