@@ -4,10 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/tusky-design-e2e"
-    },
-    {
-      "path": "./apps/tusky-design"
+      "path": "./packages/tusky-design"
     }
   ]
 }
