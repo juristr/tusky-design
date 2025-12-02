@@ -86,6 +86,27 @@
   "targetDefaults": {
     "test": {
       "dependsOn": ["^build"]
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "build/{projectRoot}"
+      }
+    }
+  },
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "specifierSource": "conventional-commits",
+        "packageRoot": "build/{projectRoot}",
+        "currentVersionResolver": "git-tag",
+        "skipLockFileUpdate": true
+      }
+    },
+    "changelog": {
+      "workspaceChangelog": {
+        "createRelease": "github"
+      },
+      "projectChangelogs": true
     }
   },
   "generators": {
