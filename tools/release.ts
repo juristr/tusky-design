@@ -17,7 +17,7 @@ async function copyPackagesToBuild() {
   // Copy each package directory
   for (const pkg of packageDirs) {
     const srcDir = path.join(packagesDir, pkg);
-    const destDir = path.join(buildDir, 'packages', pkg);
+    const destDir = path.join(buildDir, pkg);
 
     // Only copy if it's a directory
     const stats = await fs.stat(srcDir);
@@ -41,7 +41,7 @@ async function copyChangelogFiles() {
     const srcChangelogPath = path.join(packagesDir, pkg, 'CHANGELOG.md');
     const destChangelogPath = path.join(
       buildDir,
-      'packages',
+      // 'packages',
       pkg,
       'CHANGELOG.md'
     );
