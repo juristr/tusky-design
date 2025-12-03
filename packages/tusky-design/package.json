@@ -1,5 +1,5 @@
 {
-  "name": "@tusky/tusky-design",
+  "name": "@juristr/tusky-design",
   "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
@@ -29,5 +29,8 @@
   },
   "dependencies": {
     "clsx": "^2.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
