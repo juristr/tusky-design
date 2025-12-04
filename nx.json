@@ -10,7 +10,11 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
-    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
+    "sharedGlobals": [
+      "{workspaceRoot}/.github/workflows/ci.yml",
+      "{workspaceRoot}/.github/workflows/publish.yml",
+      "{workspaceRoot}/scripts/release.ts"
+    ]
   },
   "plugins": [
     {
@@ -89,13 +93,13 @@
     },
     "nx-release-publish": {
       "options": {
-        "packageRoot": "build/packages/{projectName}"
+        "packageRoot": "build/{projectRoot}"
       }
     }
   },
   "release": {
     "projects": ["packages/*"],
-    "releaseTagPattern": "{version}",
+    "releaseTagPattern": "v{version}",
     "changelog": {
       "workspaceChangelog": {
         "createRelease": "github",
@@ -115,7 +119,7 @@
         "tag": false
       },
       "currentVersionResolver": "registry",
-      "manifestRootsToUpdate": ["build/packages/{projectName}"],
+      "manifestRootsToUpdate": ["build/{projectRoot}"],
       "versionActionsOptions": {
         "skipLockFileUpdate": true
       }

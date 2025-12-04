@@ -8,6 +8,9 @@ on:
   # Manual trigger for dry-run testing
   workflow_dispatch:
 
+env:
+  NX_VERBOSE_LOGGING: true
+
 jobs:
   publish:
     # prevents this action from running on forks

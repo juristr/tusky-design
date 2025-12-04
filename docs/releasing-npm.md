@@ -3,6 +3,7 @@
 ## Overview
 
 Two-step release process:
+
 1. **Local**: Developer runs `pnpm release <version>` → creates GitHub Release
 2. **CI**: GitHub Actions detects `release: published` event → publishes to npm via OIDC
 
@@ -34,6 +35,7 @@ pnpm release 1.2.0-alpha.0
 ```
 
 Users install prereleases with:
+
 ```bash
 npm install @juristr/tusky-design@next
 # or specific version
@@ -41,11 +43,13 @@ npm install @juristr/tusky-design@1.2.0-beta.1
 ```
 
 When ready for stable release:
+
 ```bash
 pnpm release 1.2.0
 ```
 
 The script:
+
 1. Builds all packages
 2. Copies to `build/packages/`
 3. Bumps version in built package.json
@@ -55,6 +59,7 @@ The script:
 ## CI Workflow
 
 `.github/workflows/publish.yml` triggers on:
+
 - `release: published` - production releases
 - `workflow_dispatch` - dry-run testing
 
