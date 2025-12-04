@@ -89,7 +89,7 @@
     },
     "nx-release-publish": {
       "options": {
-        "packageRoot": "build/packages/{projectName}"
+        "packageRoot": "build/{projectName}"
       }
     }
   },
@@ -115,7 +115,7 @@
         "tag": false
       },
       "currentVersionResolver": "registry",
-      "manifestRootsToUpdate": ["build/packages/{projectName}"],
+      "manifestRootsToUpdate": ["build/{projectName}"],
       "versionActionsOptions": {
         "skipLockFileUpdate": true
       }

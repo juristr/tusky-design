@@ -54,13 +54,14 @@ async function copyPackagesToBuild() {
 
   await fs.remove(buildDir);
   await fs.ensureDir(buildDir);
-  await fs.ensureDir(path.join(buildDir, 'packages'));
+  // await fs.ensureDir(path.join(buildDir, 'packages'));
 
   const packageDirs = await fs.readdir(packagesDir);
 
   for (const pkg of packageDirs) {
     const srcDir = path.join(packagesDir, pkg);
-    const destDir = path.join(buildDir, 'packages', pkg);
+    // const destDir = path.join(buildDir, 'packages', pkg);
+    const destDir = path.join(buildDir, pkg);
 
     const stats = await fs.stat(srcDir);
     if (!stats.isDirectory()) continue;
