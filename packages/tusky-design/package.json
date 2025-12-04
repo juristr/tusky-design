@@ -1,5 +1,22 @@
 {
   "name": "@juristr/tusky-design",
+  "version": "0.0.0",
+  "description": "Tusky Design System components",
+  "author": "Juri Strumpflohner",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juristr/tusky-design.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juristr/tusky-design/issues"
+  },
+  "homepage": "https://github.com/juristr/tusky-design#readme",
+  "keywords": [
+    "design-system",
+    "components",
+    "ui"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
