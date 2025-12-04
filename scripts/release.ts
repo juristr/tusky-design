@@ -37,9 +37,15 @@ function parseArgs(): Options {
 }
 
 function isRelativeVersionKeyword(version: string): boolean {
-  return ['major', 'minor', 'patch', 'premajor', 'preminor', 'prepatch', 'prerelease'].includes(
-    version
-  );
+  return [
+    'major',
+    'minor',
+    'patch',
+    'premajor',
+    'preminor',
+    'prepatch',
+    'prerelease',
+  ].includes(version);
 }
 
 async function copyPackagesToBuild() {
@@ -71,14 +77,20 @@ function determineDistTag(version: string): string {
   // Prerelease versions (beta, rc, alpha, etc.)
   if (version.includes('-')) {
     const prerelease = version.split('-')[1];
-    if (prerelease.startsWith('beta') || prerelease.startsWith('rc') || prerelease.startsWith('alpha')) {
+    if (
+      prerelease.startsWith('beta') ||
+      prerelease.startsWith('rc') ||
+      prerelease.startsWith('alpha')
+    ) {
       return 'next';
     }
   }
 
   // Check if this is an older major version
   try {
-    const latestVersion = execSync('npm view @juristr/tusky-design version 2>/dev/null')
+    const latestVersion = execSync(
+      'npm view @juristr/tusky-design version 2>/dev/null'
+    )
       .toString()
       .trim();
     if (latestVersion) {
@@ -119,7 +131,9 @@ async function createGitHubRelease(options: Options) {
 
   execSync(cmd, { stdio: [0, 1, 2], maxBuffer: LARGE_BUFFER });
 
-  console.log('\nGitHub Release created! Check GitHub Actions for publish status.');
+  console.log(
+    '\nGitHub Release created! Check GitHub Actions for publish status.'
+  );
   process.exit(0);
 }
 
