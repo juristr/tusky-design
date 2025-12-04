@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, within } from 'storybook/test';
+import { expect, fn, within, userEvent } from 'storybook/test';
 import { Rating } from './Rating';
 
 const meta = {
@@ -88,5 +88,21 @@ export const HalfStarOnlyTest: Story = {
     await expect(canvas.queryAllByTestId('star-filled')).toHaveLength(0);
     await expect(halfStars).toHaveLength(1);
     await expect(emptyStars).toHaveLength(4);
+  },
+};
+
+export const WithClickableCount: Story = {
+  args: {
+    value: 4.5,
+    showCount: true,
+    count: 128,
+    onCountClick: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const countButton = canvas.getByTestId('rating-count');
+    await expect(countButton.tagName).toBe('BUTTON');
+    await userEvent.click(countButton);
+    await expect(args.onCountClick).toHaveBeenCalled();
   },
 };
