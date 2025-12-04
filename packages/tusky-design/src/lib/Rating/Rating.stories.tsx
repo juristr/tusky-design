@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { expect, within } from 'storybook/test';
+import { expect, fn, within, userEvent } from 'storybook/test';
 import { Rating } from './Rating';
 
 const meta = {
@@ -51,5 +51,58 @@ export const StarRenderTest: Story = {
     const emptyStars = canvas.getAllByTestId('star-empty');
     await expect(filledStars).toHaveLength(3);
     await expect(emptyStars).toHaveLength(2);
+  },
+};
+
+export const HalfStarRenderTest: Story = {
+  args: { value: 3.5 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const filledStars = canvas.getAllByTestId('star-filled');
+    const halfStars = canvas.getAllByTestId('star-half');
+    const emptyStars = canvas.getAllByTestId('star-empty');
+    await expect(filledStars).toHaveLength(3);
+    await expect(halfStars).toHaveLength(1);
+    await expect(emptyStars).toHaveLength(1);
+  },
+};
+
+export const FourAndHalfStarsTest: Story = {
+  args: { value: 4.5 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const filledStars = canvas.getAllByTestId('star-filled');
+    const halfStars = canvas.getAllByTestId('star-half');
+    await expect(filledStars).toHaveLength(4);
+    await expect(halfStars).toHaveLength(1);
+    await expect(canvas.queryAllByTestId('star-empty')).toHaveLength(0);
+  },
+};
+
+export const HalfStarOnlyTest: Story = {
+  args: { value: 0.5 },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const halfStars = canvas.getAllByTestId('star-half');
+    const emptyStars = canvas.getAllByTestId('star-empty');
+    await expect(canvas.queryAllByTestId('star-filled')).toHaveLength(0);
+    await expect(halfStars).toHaveLength(1);
+    await expect(emptyStars).toHaveLength(4);
+  },
+};
+
+export const WithClickableCount: Story = {
+  args: {
+    value: 4.5,
+    showCount: true,
+    count: 128,
+    onCountClick: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+    const countButton = canvas.getByTestId('rating-count');
+    await expect(countButton.tagName).toBe('BUTTON');
+    await userEvent.click(countButton);
+    await expect(args.onCountClick).toHaveBeenCalled();
   },
 };
