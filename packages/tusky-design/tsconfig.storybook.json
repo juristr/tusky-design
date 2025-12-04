@@ -4,6 +4,7 @@
     "outDir": "out-tsc/storybook",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "lib": ["es2022", "DOM"],
     "jsx": "preserve"
   },
   "exclude": [
