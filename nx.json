@@ -89,24 +89,36 @@
     },
     "nx-release-publish": {
       "options": {
-        "packageRoot": "build/{projectRoot}"
+        "packageRoot": "build/packages/{projectName}"
       }
     }
   },
   "release": {
-    "version": {
-      "generatorOptions": {
-        "specifierSource": "conventional-commits",
-        "packageRoot": "build/{projectRoot}",
-        "currentVersionResolver": "git-tag",
-        "skipLockFileUpdate": true
-      }
-    },
+    "projects": ["packages/*"],
+    "releaseTagPattern": "{version}",
     "changelog": {
       "workspaceChangelog": {
-        "createRelease": "github"
+        "createRelease": "github",
+        "file": false
       },
-      "projectChangelogs": true
+      "projectChangelogs": false,
+      "git": {
+        "commit": false,
+        "stageChanges": false,
+        "tag": false
+      }
+    },
+    "version": {
+      "git": {
+        "commit": false,
+        "stageChanges": false,
+        "tag": false
+      },
+      "currentVersionResolver": "registry",
+      "manifestRootsToUpdate": ["build/packages/{projectName}"],
+      "versionActionsOptions": {
+        "skipLockFileUpdate": true
+      }
     }
   },
   "generators": {
