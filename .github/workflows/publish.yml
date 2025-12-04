@@ -1,7 +1,15 @@
 name: publish
 
 on:
+  # Production releases (triggered by GitHub Release from local nx-release)
+  release:
+    types: [published]
+
+  # Manual trigger for dry-run testing
   workflow_dispatch:
+
+env:
+  NX_VERBOSE_LOGGING: true
 
 jobs:
   publish:
@@ -35,12 +43,19 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Config git user
-        run: |
-          git config --global user.name "Juri Strumpflohner"
-          git config --global user.email "juri.strumpflohner@gmail.com"
+      - name: Build
+        run: pnpm nx run-many -t build test lint
 
-      - name: Release
-        run: pnpm release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Resolve version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+            echo "dry_run=" >> $GITHUB_OUTPUT
+          else
+            echo "version=minor" >> $GITHUB_OUTPUT
+            echo "dry_run=--dry-run" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish
+        run: pnpm release ${{ steps.version.outputs.version }} ${{ steps.version.outputs.dry_run }}

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "release": "pnpm nx run-many --target=build && tsx tools/release.ts"
+    "release": "pnpm nx run-many --target=build,test,lint && tsx scripts/release.ts"
   },
   "private": true,
   "dependencies": {
